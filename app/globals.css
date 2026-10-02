@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-canvas: #eef0f3;
+  --color-ink: #121418;
+  --color-muted: #5c6370;
+  --color-line: #e3e6ec;
+  --color-cobalt: #1347d6;
+  --color-cobalt-deep: #0c2f93;
+  --color-lime: #d6ff3e;
+  --font-sans: var(--font-manrope), "Manrope", sans-serif;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #d6e2ff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 3px;
+}
+
+.panel {
+  border: 1px solid var(--color-line);
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 16px 40px rgba(18, 20, 24, 0.05);
+}
+
+.lift {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(19, 71, 214, 0.1);
+  border-color: #c9d5f5;
+}
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+
+.accordion-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift,
+  .accordion-panel {
+    transition: none;
+  }
+
+  .lift:hover {
+    transform: none;
+  }
+}
