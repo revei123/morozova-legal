@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Source_Serif_4 } from "next/font/google";
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
 import { JsonLd, personJsonLd } from "@/components/json-ld";
@@ -9,6 +9,12 @@ import "./globals.css";
 const manrope = Manrope({
   subsets: ["cyrillic", "latin"],
   variable: "--font-manrope",
+  display: "swap",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["cyrillic", "latin"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
@@ -30,11 +36,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={manrope.variable}>
+    <html lang="ru" className={`${manrope.variable} ${sourceSerif.variable}`}>
       <body className="min-h-screen antialiased">
         <JsonLd data={personJsonLd()} />
         <Header />
-        <main className="pt-24">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

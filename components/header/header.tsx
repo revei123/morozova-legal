@@ -9,26 +9,27 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-4">
-      <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between gap-3 rounded-2xl border border-line bg-white px-3 shadow-[0_12px_40px_rgba(18,20,24,0.08)] sm:px-4">
-        <Link href="/" className="min-w-0 pl-2 leading-tight" onClick={() => setOpen(false)}>
-          <span className="block text-sm font-bold tracking-tight">{site.short}</span>
-          <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-cobalt">Legal</span>
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-[4.25rem] max-w-[1180px] items-center justify-between gap-4 px-4 sm:px-6">
+        <Link href="/" className="min-w-0 leading-tight" onClick={() => setOpen(false)}>
+          <span className="block text-[15px] font-semibold tracking-tight">{site.short}</span>
+          <span className="block text-xs text-muted">Юрист в Минске</span>
         </Link>
-        <nav className="hidden items-center gap-7 text-sm font-medium lg:flex" aria-label="Основная навигация">
+        <nav className="hidden items-center gap-7 text-sm lg:flex" aria-label="Основная навигация">
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="text-ink/80 hover:text-cobalt">
+            <Link key={item.href} href={item.href} className="text-ink/80 hover:text-accent">
               {item.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/contact" className="rounded-xl bg-cobalt px-3 py-2 text-sm font-semibold text-white hover:bg-cobalt-deep sm:px-4">
-            Консультация
+          <Link href="/contact" className="bg-accent px-3 py-2 text-sm text-sheet transition hover:bg-ink sm:px-4">
+            <span className="sm:hidden">Записаться</span>
+            <span className="hidden sm:inline">Записаться на консультацию</span>
           </Link>
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-xl border border-line lg:hidden"
+            className="inline-flex size-11 items-center justify-center border border-line lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((value) => !value)}
@@ -39,11 +40,11 @@ export function Header() {
         </div>
       </div>
       {open ? (
-        <nav id="mobile-nav" className="mx-auto mt-2 max-w-[1180px] rounded-2xl border border-line bg-white p-4 shadow-lg lg:hidden" aria-label="Мобильная навигация">
-          <ul className="grid gap-2">
+        <nav id="mobile-nav" className="border-t border-line bg-sheet px-4 py-3 lg:hidden" aria-label="Мобильная навигация">
+          <ul className="grid">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="block rounded-xl px-3 py-3 text-lg font-semibold hover:bg-canvas" onClick={() => setOpen(false)}>
+                <Link href={item.href} className="block py-3 text-lg" onClick={() => setOpen(false)}>
                   {item.label}
                 </Link>
               </li>

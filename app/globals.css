@@ -1,52 +1,67 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-canvas: #eef0f3;
-  --color-ink: #121418;
-  --color-muted: #5c6370;
-  --color-line: #e3e6ec;
-  --color-cobalt: #1347d6;
-  --color-cobalt-deep: #0c2f93;
-  --color-lime: #d6ff3e;
+  --color-paper: #f3efe8;
+  --color-sheet: #fbf8f4;
+  --color-ink: #1c2430;
+  --color-muted: #5c584f;
+  --color-line: #ddd6cb;
+  --color-accent: #1b3348;
   --font-sans: var(--font-manrope), "Manrope", sans-serif;
+  --font-display: var(--font-newsreader), "Newsreader", serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--color-canvas);
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
 }
 
 ::selection {
-  background: #d6e2ff;
+  background: #d9e3ee;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-cobalt);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
-.panel {
-  border: 1px solid var(--color-line);
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 16px 40px rgba(18, 20, 24, 0.05);
+.display {
+  font-family: var(--font-display);
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
-.lift {
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+.rule {
+  border-color: var(--color-line);
 }
 
-.lift:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(19, 71, 214, 0.1);
-  border-color: #c9d5f5;
+.fade-up {
+  animation: fade-up 0.7s ease both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .accordion-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s ease;
+  transition: grid-template-rows 0.35s ease;
 }
 
 .accordion-panel.is-open {
@@ -54,12 +69,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lift,
-  .accordion-panel {
-    transition: none;
+  html {
+    scroll-behavior: auto;
   }
 
-  .lift:hover {
-    transform: none;
+  .fade-up,
+  .accordion-panel {
+    animation: none;
+    transition: none;
   }
 }

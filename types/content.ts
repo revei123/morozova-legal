@@ -1,29 +1,26 @@
-export type TopicId = "contract" | "family" | "dispute" | "court" | "documents" | "other";
-
 export type Service = {
   slug: string;
-  topic: TopicId;
   title: string;
   short: string;
   description: string;
   situations: string[];
-  includes: string[];
+  help: string[];
+  documents: string[];
   steps: { title: string; text: string }[];
-  size: "lg" | "sm";
 };
 
 export type CaseStudy = {
   slug: string;
   title: string;
-  topic: string;
-  problem: string;
-  approach: string;
+  serviceSlug: string;
+  situation: string;
+  task: string;
+  work: string;
   result: string;
 };
 
 export type Review = {
   name: string;
-  date: string;
   topic: string;
   text: string;
 };
@@ -31,11 +28,15 @@ export type Review = {
 export type Article = {
   slug: string;
   title: string;
-  category: "Договоры" | "Семья" | "Суды" | "Документы";
+  category: string;
   excerpt: string;
   minutes: number;
   date: string;
   dateISO: string;
+  image: string;
+  imageAlt: string;
+  serviceSlug: string;
+  related: string[];
   paragraphs: string[];
 };
 

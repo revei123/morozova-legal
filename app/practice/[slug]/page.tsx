@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container } from "@/components/ui/container";
 import { cases, getCase } from "@/data/cases";
+import { getService } from "@/data/services";
 import { pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -16,34 +17,41 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getCase(slug);
   if (!item) return {};
-  return pageMeta({ title: item.title, description: item.problem, path: `/practice/${item.slug}` });
+  return pageMeta({ title: item.title, description: item.situation, path: `/practice/${item.slug}` });
 }
 
 export default async function CasePage({ params }: Props) {
   const { slug } = await params;
   const item = getCase(slug);
   if (!item) notFound();
+  const service = getService(item.serviceSlug);
 
   return (
-    <Container className="pb-20">
+    <Container className="max-w-3xl py-12 lg:py-16">
       <Breadcrumbs items={[{ href: "/", label: "Главная" }, { href: "/practice", label: "Практика" }, { label: item.title }]} />
-      <p className="mt-6 text-xs font-bold tracking-[0.16em] text-cobalt">{item.topic}</p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight">{item.title}</h1>
-      <div className="mt-8 grid gap-4">
-        <Block label="PROBLEM" text={item.problem} />
-        <Block label="APPROACH" text={item.approach} />
-        <Block label="RESULT" text={item.result} />
+      <h1 className="display mt-8 text-4xl sm:text-5xl">{item.title}</h1>
+      <p className="mt-4 text-sm text-muted">Демонстрационный пример. Не реальное дело.</p>
+      <div className="mt-10 grid gap-8">
+        <Field label="Ситуация" text={item.situation} />
+        <Field label="Задача" text={item.task} />
+        <Field label="Работа" text={item.work} />
+        <Field label="Результат" text={item.result} />
       </div>
-      <Link href="/contact" className="mt-8 inline-flex rounded-xl bg-cobalt px-5 py-3 font-semibold text-white">Обсудить свою ситуацию</Link>
+      {service ? (
+        <p className="mt-8">
+          Близкая услуга: <Link href={`/services/${service.slug}`} className="underline">{service.title}</Link>
+        </p>
+      ) : null}
+      <Link href="/contact" className="mt-8 inline-flex bg-accent px-5 py-3 text-sheet">Записаться на консультацию</Link>
     </Container>
   );
 }
 
-function Block({ label, text }: { label: string; text: string }) {
+function Field({ label, text }: { label: string; text: string }) {
   return (
-    <article className="panel p-5">
-      <p className="text-xs font-bold tracking-[0.16em] text-cobalt">{label}</p>
-      <p className="mt-2 leading-7">{text}</p>
-    </article>
+    <div className="border-t border-line pt-4">
+      <p className="text-sm text-muted">{label}</p>
+      <p className="mt-2 text-lg">{text}</p>
+    </div>
   );
 }
